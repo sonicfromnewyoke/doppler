@@ -17,4 +17,7 @@ fi
 
 echo "Starting Surfpool..."
 
-surfpool start "$@"
+# Run the `setup` runbook (declared in txtx.yml) on startup so the program and the
+# oracle/admin accounts are deployed into the surfnet. Without this, surfpool boots
+# an empty simnet and the examples fail with "failed to fetch oracle account".
+surfpool start --runbook setup "$@"
