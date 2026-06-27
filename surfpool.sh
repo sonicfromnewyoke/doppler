@@ -3,7 +3,7 @@
 set -e 
 
 # Check if the program binary exists, and build it if not
-[ ! -f "./target/deploy/doppler_program.so" ] && cargo build-sbf --manifest-path program/Cargo.toml
+[ ! -f "./target/deploy/doppler_program.so" ] && cargo build-sbf --tools-version v1.54 --manifest-path program/Cargo.toml
 
 # Check if Surfpool is available on the environment
 if ! command -v surfpool &> /dev/null; then
