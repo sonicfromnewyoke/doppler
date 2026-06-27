@@ -256,9 +256,10 @@ cargo test
 ### E2E
 
 ```bash
-chmod +X ./surfpool.sh
-./surfpool.sh
+chmod +x ./run-validator.sh
+./run-validator.sh
 
+# in another shell:
 cargo run --bin single-price-feed
 cargo run --bin multiple-price-feed
 ```

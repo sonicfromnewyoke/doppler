@@ -21,15 +21,13 @@ pub(crate) const COMPUTE_BUDGET_PROGRAM_SIZE: u32 = 22;
 // doppler program account (LoaderV3 `Program`: 4-byte tag + 32-byte programdata key).
 pub(crate) const DOPPLER_PROGRAM_SIZE: u32 = 36;
 
-// doppler ELF length, read at compile time from the stripped deploy artifact so it
-// can't go stale after a program rebuild. Requires `cargo build-sbf` to have run first
-// (surfpool.sh does this); a standalone `cargo build -p doppler-sdk` on a fresh checkout
-// fails until `target/deploy/doppler_program.so` exists.
-pub(crate) const DOPPLER_ELF_SIZE: u32 =
-    include_bytes!(concat!(env!("CARGO_MANIFEST_DIR"), "/../target/deploy/doppler_program.so"))
-        .len() as u32;
+// doppler program binary size (bytes), derived at compile time by build.rs from the
+// stripped deploy artifact (`target/deploy/doppler_program.so`). build.rs builds the
+// program first if the artifact is missing, so a fresh `cargo build` works without a
+// manual step (it does require the Solana SBF toolchain on PATH). See sdk/build.rs.
+include!(concat!(env!("OUT_DIR"), "/doppler_binary_size.rs"));
 
-// programdata account: 45-byte LoaderV3 header + ELF. Assumes an exact-fit deploy; a
-// `solana program deploy` with upgrade headroom allocates ~2x the ELF, which this does
-// not model.
-pub(crate) const DOPPLER_PROGRAM_DATA_SIZE: u32 = 45 + DOPPLER_ELF_SIZE;
+// programdata account: 45-byte LoaderV3 header + program binary. Assumes an exact-fit
+// deploy; a `solana program deploy` with upgrade headroom allocates ~2x the binary,
+// which this does not model.
+pub(crate) const DOPPLER_PROGRAM_DATA_SIZE: u32 = 45 + DOPPLER_BINARY_SIZE;
