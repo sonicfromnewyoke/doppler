@@ -6,7 +6,7 @@ PROGRAM_ID="fastRQJt3nLdY3QA7n8eZ8ETEVefy56ryfUGVkfZokm"
 UPGRADE_AUTHORITY="admnz5UvRa93HM5nTrxXmsJ1rw2tvXMBFGauvCgzQhE"
 SO_PATH="target/deploy/doppler_program.so"
 ACCOUNTS_DIR="examples/accounts"
-TOOLS_VERSION="v1.54"  # keep in sync with sdk/build.rs
+TOOLS_VERSION="v1.54"
 
 command -v jq >/dev/null || { echo "jq is required (brew install jq)" >&2; exit 1; }
 

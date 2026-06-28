@@ -21,11 +21,11 @@ pub(crate) const COMPUTE_BUDGET_PROGRAM_SIZE: u32 = 22;
 // doppler program account (LoaderV3 `Program`: 4-byte tag + 32-byte programdata key).
 pub(crate) const DOPPLER_PROGRAM_SIZE: u32 = 36;
 
-// doppler program binary size (bytes), derived at compile time by build.rs from the
-// stripped deploy artifact (`target/deploy/doppler_program.so`). build.rs builds the
-// program first if the artifact is missing, so a fresh `cargo build` works without a
-// manual step (it does require the Solana SBF toolchain on PATH). See sdk/build.rs.
-include!(concat!(env!("OUT_DIR"), "/doppler_binary_size.rs"));
+// doppler program binary size (bytes): the size of the stripped deploy artifact
+// (`target/deploy/doppler_program.so`). Pinned statically to the validator-confirmed
+// value; if the program is rebuilt with a different toolchain, re-measure the artifact
+// and update this constant (and the `loaded_accounts_data_size` tests).
+pub(crate) const DOPPLER_BINARY_SIZE: u32 = 1136;
 
 // programdata account: 45-byte LoaderV3 header + program binary. Assumes an exact-fit
 // deploy; a `solana program deploy` with upgrade headroom allocates ~2x the binary,
